@@ -2,15 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = "sweet-bites-change-this-secret-key"
+app.secret_key = os.getenv("SECRET_KEY")
 
 DB_CONFIG = {
-    "host": "DB_HOST",
-    "port": DB_PORT,
-    "user": "DB_USER",
-    "password": "DB_PASSWORD",
-    "database": "sweet_bites"
+    "host": os.getenv("DB_HOST"),
+    "port": int(os.getenv("DB_PORT", 3306)),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME")
 }
 
 def get_db():
