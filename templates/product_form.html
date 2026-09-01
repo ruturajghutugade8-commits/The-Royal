@@ -1,0 +1,14 @@
+{% extends "base.html" %The Royal Cakes}
+{% block title %}Product - The Royal Cakes{% endblock %}
+{% block content %}
+<div class="form-box">
+<h2>{{ 'Edit Product' if product else 'Add Product' }}</h2>
+<form method="POST">
+<input type="text" name="name" placeholder="Product name" value="{{ product.name if product else '' }}" required>
+<textarea name="description" placeholder="Description">{{ product.description if product else '' }}</textarea>
+<input type="number" name="price" step="0.01" min="1" placeholder="Price" value="{{ product.price if product else '' }}" required>
+<input type="url" name="image" placeholder="Image URL" value="{{ product.image if product else '' }}">
+<button class="btn" type="submit">Save Product</button>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}The Royal Cakes - Home{% endblock %}
+{% block content %}
+<section class="hero">
+<h1>Fresh Cakes. Sweet Moments. 🎂</h1>
+<p>Order delicious cakes online from The Royal Cakes.</p>
+<a class="btn" href="#products">Shop Cakes</a>
+</section>
+<h2 id="products">Our Cakes</h2>
+<div class="grid">
+{% for p in products %}
+<article class="card">
+<img src="{{ p.image }}" alt="{{ p.name }}">
+<div class="card-body">
+<h3>{{ p.name }}</h3>
+<p>{{ p.description }}</p>
+<strong>₹{{ "%.2f"|format(p.price) }}</strong>
+<form method="POST" action="{{ url_for('add_to_cart', product_id=p.id) }}">
+<button class="btn" type="submit">Add to Cart</button>
+</form>
+</div>
+</article>
+{% endfor %}
+</div>
+{% endblock %}

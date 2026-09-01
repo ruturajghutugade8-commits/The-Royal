@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}All Orders - The Royal Cakes{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>All Orders</h1><p>View every customer order and its current status.</p></div><a class="btn" href="{{ url_for('admin_dashboard') }}">Dashboard</a></div>
+<table>
+<tr><th>Order ID</th><th>Customer</th><th>Email</th><th>Total</th><th>Status</th><th>Date</th><th>Details</th></tr>
+{% for o in orders %}
+<tr>
+<td>#{{ o.id }}</td><td>{{ o.customer_name }}</td><td>{{ o.customer_email }}</td>
+<td>₹{{ "%.2f"|format(o.total_amount) }}</td><td><span class="status">{{ o.status }}</span></td>
+<td>{{ o.created_at }}</td><td><a href="{{ url_for('admin_order_detail', order_id=o.id) }}">View Details</a></td>
+</tr>
+{% else %}
+<tr><td colspan="7">No orders found.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

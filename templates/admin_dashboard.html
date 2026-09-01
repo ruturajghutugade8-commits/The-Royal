@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - The Royal Cakes{% endblock %}
+{% block content %}
+<div class="admin-header">
+<h1>Admin Dashboard</h1>
+<p>Welcome, {{ session.get('user_name') }}. Manage the complete store from here.</p>
+</div>
+
+<div class="stats">
+<div class="stat"><span>Total Users</span><strong>{{ stats.users }}</strong></div>
+<div class="stat"><span>Total Products</span><strong>{{ stats.products }}</strong></div>
+<div class="stat"><span>Total Orders</span><strong>{{ stats.orders }}</strong></div>
+<div class="stat"><span>Total Revenue</span><strong>₹{{ "%.2f"|format(stats.revenue) }}</strong></div>
+</div>
+
+<div class="admin-nav">
+<a class="btn" href="{{ url_for('admin_users') }}">👥 Manage Users</a>
+<a class="btn" href="{{ url_for('admin_products') }}">🎂 Manage Products</a>
+<a class="btn" href="{{ url_for('admin_orders') }}">📦 Manage Orders</a>
+</div>
+
+<h2>Recent Orders</h2>
+<table>
+<tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th><th></th></tr>
+{% for o in recent_orders %}
+<tr>
+<td>#{{ o.id }}</td><td>{{ o.customer_name }}</td><td>₹{{ "%.2f"|format(o.total_amount) }}</td>
+<td><span class="status">{{ o.status }}</span></td><td>{{ o.created_at }}</td>
+<td><a href="{{ url_for('admin_order_detail', order_id=o.id) }}">View</a></td>
+</tr>
+{% else %}
+<tr><td colspan="6">No orders found.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

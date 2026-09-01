@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}All Users - The Royal Cakes{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>All Users</h1><p>All registered customer and admin accounts.</p></div><a class="btn" href="{{ url_for('admin_dashboard') }}">Dashboard</a></div>
+<table>
+<tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Registered</th><th>Action</th></tr>
+{% for u in users %}
+<tr>
+<td>{{ u.id }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td>
+<td>{% if u.is_admin %}<span class="badge">Admin</span>{% else %}Customer{% endif %}</td>
+<td>{{ u.created_at }}</td>
+<td>
+{% if u.id != session.get('user_id') %}
+<form class="inline" method="POST" action="{{ url_for('admin_delete_user', user_id=u.id) }}" onsubmit="return confirm('Delete this user?')">
+<button class="danger">Delete</button>
+</form>
+{% else %}Current account{% endif %}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
